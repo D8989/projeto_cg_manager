@@ -1,6 +1,18 @@
-<section>
-  <div *ngFor="let teste of itens">
-    {{ teste.nome }}, {{ teste.tipoItemBase.nome }}
-  </div>
-</section>
-<!-- <table mat-table [dataSource]="itens"></table> -->
+<table mat-table [dataSource]="itens">
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let item">{{ item.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipo">
+    <th mat-header-cell *matHeaderCellDef>Tipo</th>
+    <td mat-cell *matCellDef="let item">{{ item.tipoItemBase.nome }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
+</table>
+
+<button class="botao" mat-button>Criar item</button>
+<button class="botao" mat-button>Tipos itens</button>
+<button class="botao" mat-button [routerLink]="['/']">Voltar</button>
