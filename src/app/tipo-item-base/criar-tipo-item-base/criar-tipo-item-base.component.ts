@@ -21,6 +21,7 @@ export class CriarTipoItemBaseComponent {
   protected nomeForm = new FormControl('', [
     Validators.required,
     Validators.minLength(1),
+    Validators.maxLength(20),
   ]);
   protected descricaoForm = new FormControl('');
   protected erroNomeMsg = '';
@@ -48,6 +49,8 @@ export class CriarTipoItemBaseComponent {
       this.erroNomeMsg = 'O nome é obrigatório';
     } else if (this.nomeForm.hasError('minLength')) {
       this.erroNomeMsg = 'O nome não deve ser uma string vazia';
+    } else if (this.nomeForm.hasError('maxLength')) {
+      this.erroNomeMsg = 'O nome não deve ter mais que 20 caractéres';
     } else {
       this.erroNomeMsg = '';
     }

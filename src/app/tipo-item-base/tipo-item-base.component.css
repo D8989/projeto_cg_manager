@@ -4,3 +4,15 @@
   padding: 5px;
   background-color: #e4ddc6;
 }
+
+.botao_acao {
+  font-weight: bold;
+  gap: 2px;
+  font-size: small;
+}
+
+.botao_acao_list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

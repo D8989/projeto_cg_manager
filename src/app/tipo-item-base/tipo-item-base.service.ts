@@ -21,4 +21,10 @@ export class TipoItemBaseService {
       dto
     );
   }
+
+  deleteTipo(id: number) {
+    return this.http.delete(
+      `http://localhost:3000/tipo-item-base/ID`.replace('ID', id.toString())
+    );
+  }
 }
