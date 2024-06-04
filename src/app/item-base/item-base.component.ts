@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, MaterialModule, RouterModule],
   templateUrl: './item-base.component.html',
-  styleUrl: './item-base.component.css',
+  styleUrls: ['./item-base.component.css', '../../styles.css'],
 })
 export class ItemBaseComponent {
   protected itens: IItemBase[] = [];
