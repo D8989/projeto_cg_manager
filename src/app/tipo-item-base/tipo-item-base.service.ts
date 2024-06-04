@@ -16,6 +16,9 @@ export class TipoItemBaseService {
   }
 
   insertTipo(dto: ICreateTipoItemBase) {
-    return this.http.post('http://localhost:3000/tipo-item-base', dto);
+    return this.http.post<ITipoItemBase>(
+      'http://localhost:3000/tipo-item-base',
+      dto
+    );
   }
 }

@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TipoItemBaseService } from '../tipo-item-base.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-criar-tipo-item-base',
@@ -25,7 +26,7 @@ export class CriarTipoItemBaseComponent {
   protected erroNomeMsg = '';
   constructor(private tipoItemBaseService: TipoItemBaseService) {}
 
-  salvar() {
+  async salvar() {
     const nome = this.nomeForm.value;
     const descricao = this.descricaoForm.value || null;
 
@@ -33,11 +34,13 @@ export class CriarTipoItemBaseComponent {
       throw Error('Campo "nome" inválido');
     }
 
-    const resp = this.tipoItemBaseService
-      .insertTipo({ nome, descricao })
-      .subscribe((resp) => resp);
-
-    console.log(resp);
+    return await lastValueFrom(
+      this.tipoItemBaseService.insertTipo({ nome, descricao })
+    )
+      .then((resp) => resp)
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
   }
 
   checkNomeForm() {
