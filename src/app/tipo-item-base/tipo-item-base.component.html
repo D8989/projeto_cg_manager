@@ -13,5 +13,7 @@
   <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
 </table>
 
-<button class="botao" mat-button>Criar tipo-item</button>
+<button class="botao" mat-button [routerLink]="['/tipo-item-base/criacao']">
+  Criar tipo-item
+</button>
 <button class="botao" mat-button [routerLink]="['/item-base']">Voltar</button>

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PaginaInicialComponent } from './pagina-inicial/pagina-inicial.component';
 import { ItemBaseComponent } from './item-base/item-base.component';
 import { TipoItemBaseComponent } from './tipo-item-base/tipo-item-base.component';
+import { CriarTipoItemBaseComponent } from './tipo-item-base/criar-tipo-item-base/criar-tipo-item-base.component';
 
 export const routes: Routes = [
   {
@@ -18,5 +19,10 @@ export const routes: Routes = [
     path: 'tipo-item-base',
     component: TipoItemBaseComponent,
     title: 'Tipo Item-base',
+  },
+  {
+    path: 'tipo-item-base/criacao',
+    component: CriarTipoItemBaseComponent,
+    title: 'create tipo-item-base',
   },
 ];
