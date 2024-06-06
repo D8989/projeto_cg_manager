@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { IItemBase } from './interfaces/item-base.interface';
 import { FormControl } from '@angular/forms';
 import { ICreateItemBase } from './interfaces/create-item-base.interface';
+import { IEditItemBase } from './interfaces/edit-item-base.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,19 @@ export class ItemBaseService {
         'ID',
         id.toString()
       )
+    );
+  }
+
+  getItem(id: number) {
+    return this.http.get<IItemBase>(
+      'http://localhost:3000/item-base/ID'.replace('ID', id.toString())
+    );
+  }
+
+  editar(id: number, dto: IEditItemBase) {
+    return this.http.put<IItemBase>(
+      'http://localhost:3000/item-base/ID'.replace('ID', id.toString()),
+      dto
     );
   }
 
