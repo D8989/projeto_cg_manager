@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { IItemBase } from './interfaces/item-base.interface';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-item-base',
@@ -23,6 +24,16 @@ export class ItemBaseComponent {
     this.itemBaseService.listItensBase().subscribe((resp) => {
       this.itens = resp;
     });
+  }
+
+  async desativaItem(item: IItemBase) {
+    await lastValueFrom(this.itemBaseService.softDelete(item.id))
+      .then(async () => {
+        this.itens = await lastValueFrom(this.itemBaseService.listItensBase());
+      })
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
   }
 
   teste(x: any) {
