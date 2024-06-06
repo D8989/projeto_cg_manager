@@ -45,15 +45,7 @@ export class CriarTipoItemBaseComponent {
   }
 
   checkNomeForm() {
-    if (this.nomeForm.hasError('required')) {
-      this.erroNomeMsg = 'O nome é obrigatório';
-    } else if (this.nomeForm.hasError('minLength')) {
-      this.erroNomeMsg = 'O nome não deve ser uma string vazia';
-    } else if (this.nomeForm.hasError('maxLength')) {
-      this.erroNomeMsg = 'O nome não deve ter mais que 20 caractéres';
-    } else {
-      this.erroNomeMsg = '';
-    }
+    this.erroNomeMsg = this.tipoItemBaseService.checkNomeForm(this.nomeForm);
   }
 
   isSalvarDissable(): boolean {

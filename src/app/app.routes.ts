@@ -3,10 +3,11 @@ import { PaginaInicialComponent } from './pagina-inicial/pagina-inicial.componen
 import { ItemBaseComponent } from './item-base/item-base.component';
 import { TipoItemBaseComponent } from './tipo-item-base/tipo-item-base.component';
 import { CriarTipoItemBaseComponent } from './tipo-item-base/criar-tipo-item-base/criar-tipo-item-base.component';
+import { EditarTipoItemBaseComponent } from './tipo-item-base/editar-tipo-item-base/editar-tipo-item-base.component';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: PaginaInicialComponent,
     title: 'Página inicial',
   },
@@ -24,5 +25,15 @@ export const routes: Routes = [
     path: 'tipo-item-base/criacao',
     component: CriarTipoItemBaseComponent,
     title: 'create tipo-item-base',
+  },
+  {
+    path: 'tipo-item-base/:id/edicao',
+    component: EditarTipoItemBaseComponent,
+    title: 'edit tipo-item-base',
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
 ];
