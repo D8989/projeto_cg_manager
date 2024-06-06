@@ -10,6 +10,16 @@
     <td mat-cell *matCellDef="let item">{{ item.tipoItemBase.nome }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row">
+      <div class="botao_acao_list">
+        <button class="botao_acao" (click)="teste(row)">Edit</button>
+        <button class="botao_acao" (click)="teste(row)">Del</button>
+      </div>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
 </table>

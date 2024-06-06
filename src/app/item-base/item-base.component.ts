@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 })
 export class ItemBaseComponent {
   protected itens: IItemBase[] = [];
-  protected columnsToDisplay = ['nome', 'tipo'];
+  protected columnsToDisplay = ['nome', 'tipo', 'actions'];
   constructor(private itemBaseService: ItemBaseService) {
     this.init();
   }
@@ -23,5 +23,9 @@ export class ItemBaseComponent {
     this.itemBaseService.listItensBase().subscribe((resp) => {
       this.itens = resp;
     });
+  }
+
+  teste(x: any) {
+    console.log(x);
   }
 }
