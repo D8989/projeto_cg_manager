@@ -14,7 +14,9 @@
   <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
 </table>
 
-<button class="botao" mat-button>Criar item</button>
+<button class="botao" mat-button [routerLink]="['/item-base/criacao']">
+  Criar item
+</button>
 <button class="botao" mat-button [routerLink]="['/tipo-item-base']">
   Tipos itens
 </button>
