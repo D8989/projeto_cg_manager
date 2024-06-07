@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IItemBase } from '../interfaces/item-base.interface';
 import { MaterialModule } from '../../material/material.module';
 import {
@@ -20,7 +20,7 @@ import { TipoItemBaseService } from '../../tipo-item-base/tipo-item-base.service
   templateUrl: './editar-item-base.component.html',
   styleUrl: './editar-item-base.component.css',
 })
-export class EditarItemBaseComponent {
+export class EditarItemBaseComponent implements OnInit {
   protected item: IItemBase = {
     id: 0,
     nome: 'Desconhecido',
@@ -41,14 +41,11 @@ export class EditarItemBaseComponent {
 
   protected erroNomeMsg = '';
   protected erroTipoSelectMsg = '';
-  protected tipos: ITipoItemBase[];
+  protected tipos: ITipoItemBase[] = [];
   constructor(
     private itemBaseService: ItemBaseService,
     private tipoItemBaseService: TipoItemBaseService
-  ) {
-    this.tipos = [];
-    this.loadTipos();
-  }
+  ) {}
 
   @Input()
   set id(itemId: string) {
@@ -58,15 +55,21 @@ export class EditarItemBaseComponent {
         this.setForms();
       },
       error: (erro) => {
-        console.log(erro);
-
         alert(erro.error.message);
       },
     });
   }
 
-  async loadTipos() {
-    this.tipos = await lastValueFrom(this.tipoItemBaseService.listTipos());
+  ngOnInit() {
+    this.tipoItemBaseService.listTipos().subscribe({
+      next: (resp) => {
+        this.tipos = resp;
+        this.setForms();
+      },
+      error: (erro) => {
+        alert(erro.error.message);
+      },
+    });
   }
 
   async editar() {
@@ -122,8 +125,6 @@ export class EditarItemBaseComponent {
   }
 
   private setForms() {
-    console.log('ITEM: ', this.item);
-
     this.nomeForm.setValue(this.item.nome);
     this.descricaoForm.setValue(this.item.descricao);
     this.tipoSelectForm.setValue(this.item.tipoItemBase.id.toString());
