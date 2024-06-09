@@ -9,6 +9,7 @@ import { EditarItemBaseComponent } from './item-base/editar-item-base/editar-ite
 import { ListarProdutoComponent } from './produto/listar-produto/listar-produto.component';
 import { CriarProdutoComponent } from './produto/criar-produto/criar-produto.component';
 import { ListarMarcaComponent } from './marca/listar-marca/listar-marca.component';
+import { CriarMarcaComponent } from './marca/criar-marca/criar-marca.component';
 
 export const routes: Routes = [
   {
@@ -60,6 +61,11 @@ export const routes: Routes = [
     path: 'marca',
     component: ListarMarcaComponent,
     title: 'Marca',
+  },
+  {
+    path: 'marca/criacao',
+    component: CriarMarcaComponent,
+    title: 'Create marca',
   },
   {
     path: '',
