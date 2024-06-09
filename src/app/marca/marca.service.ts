@@ -4,6 +4,7 @@ import { IMarcaPaginado } from './interfaces/marca-paginado.interface';
 import { FormControl } from '@angular/forms';
 import { ICreateMarca } from './interfaces/create-marca.interface';
 import { IMarca } from './interfaces/marca.interface';
+import { IEditMarca } from './interfaces/edit-marca.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,19 @@ export class MarcaService {
 
   insertMarca(dto: ICreateMarca) {
     return this.http.post<IMarca>('http://localhost:3000/marca', dto);
+  }
+
+  getMarca(id: number) {
+    return this.http.get<IMarca>(
+      'http://localhost:3000/marca/ID'.replace('ID', id.toString())
+    );
+  }
+
+  editMarca(id: number, dto: IEditMarca) {
+    return this.http.put(
+      'http://localhost:3000/marca/ID'.replace('ID', id.toString()),
+      dto
+    );
   }
 
   checkNomeForm(nomeForm: FormControl<string | null>): string {

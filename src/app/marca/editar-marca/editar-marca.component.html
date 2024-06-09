@@ -1,0 +1,27 @@
+<h1>
+  Edição da marca <u>{{ marca.nome }}</u>
+</h1>
+
+<mat-form-field>
+  <mat-label>Nome</mat-label>
+  <input
+    matInput
+    placeholder="Nome"
+    [formControl]="nomeForm"
+    (blur)="checkNomeForm()"
+    required
+  />
+  @if (nomeForm.invalid) {
+  <mat-error>{{ erroNomeMsg }}</mat-error>
+  }
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Descrição</mat-label>
+  <input matInput [formControl]="descricaoForm" />
+</mat-form-field>
+
+<button mat-button (click)="editar()" [disabled]="isEditarDissable()">
+  Salvar
+</button>
+<button mat-button [routerLink]="['/marca']">Voltar</button>
