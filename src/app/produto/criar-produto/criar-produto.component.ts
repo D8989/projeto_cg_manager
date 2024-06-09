@@ -10,7 +10,11 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ProdutoService } from '../produto.service';
-import { lastValueFrom } from 'rxjs';
+import { forkJoin, lastValueFrom } from 'rxjs';
+import { ItemBaseService } from '../../item-base/item-base.service';
+import { MarcaService } from '../../marca/marca.service';
+import { IMarca } from '../../marca/interfaces/marca.interface';
+import { IItemBase } from '../../item-base/interfaces/item-base.interface';
 
 @Component({
   selector: 'app-criar-produto',
@@ -52,13 +56,28 @@ export class CriarProdutoComponent implements OnInit {
   protected erroQuantidadeMsg = '';
   protected erroGramaturaMsg = '';
 
-  protected marcas: { id: number; nome: string }[] = [
-    { id: 1, nome: 'marca 1' },
-  ];
-  protected itens: { id: number; nome: string }[] = [{ id: 8, nome: 'item 8' }];
-  constructor(private produtoService: ProdutoService) {}
+  protected marcas: IMarca[] = [];
+  protected itens: IItemBase[] = [];
+  constructor(
+    private produtoService: ProdutoService,
+    private itemBaseService: ItemBaseService,
+    private marcaService: MarcaService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    forkJoin([
+      this.itemBaseService.listItensBase(),
+      this.marcaService.list(),
+    ]).subscribe({
+      next: (resp) => {
+        this.itens = resp[0];
+        this.marcas = resp[1].dados;
+      },
+      error: (erro) => {
+        alert(erro.error.message);
+      },
+    });
+  }
 
   checkNomeForm() {
     this.erroNomeMsg = this.produtoService.checkNomeForm(this.nomeForm);

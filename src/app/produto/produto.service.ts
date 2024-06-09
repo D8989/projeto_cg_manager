@@ -46,21 +46,21 @@ export class ProdutoService {
 
   checkMarcaSelectForm(nomeForm: FormControl<string | null>): string {
     if (nomeForm.hasError('required')) {
-      return 'O nome é obrigatório';
+      return 'A marca é obrigatória';
     }
     return '';
   }
 
   checkItemBaseSelectForm(nomeForm: FormControl<string | null>): string {
     if (nomeForm.hasError('required')) {
-      return 'O nome é obrigatório';
+      return 'O item-base é obrigatório';
     }
     return '';
   }
 
   checkQuantidadeForm(nomeForm: FormControl<string | null>): string {
     if (nomeForm.hasError('required')) {
-      return 'O nome é obrigatório';
+      return 'A quantidade é obrigatória';
     }
     if (nomeForm.hasError('min')) {
       return 'O valor da quantidade deve ser maior que 1';
@@ -73,7 +73,7 @@ export class ProdutoService {
 
   checkGramaturaForm(nomeForm: FormControl<string | null>): string {
     if (nomeForm.hasError('required')) {
-      return 'O nome é obrigatório';
+      return 'A gramatura é obrigatória';
     }
     if (
       nomeForm.hasError('pattern') ||

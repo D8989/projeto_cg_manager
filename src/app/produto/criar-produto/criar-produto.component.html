@@ -28,6 +28,9 @@
     type="number"
     required
   />
+  @if(quantidadeForm.invalid){
+  <mat-error>{{ erroQuantidadeMsg }}</mat-error>
+  }
 </mat-form-field>
 
 <mat-form-field>
