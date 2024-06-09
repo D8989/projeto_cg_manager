@@ -1,8 +1,9 @@
 <h1 class="titulo">Controle de compras</h1>
 <div class="organizacao__botoes">
   <div class="lista__botoes">
-    <button class="botao" onclick="console.log('TESTE 1')">Itens</button>
-    <button class="botao" onclick="console.log('TESTE 2')">Produtos</button>
+    <!-- <button class="botao" onclick="console.log('TESTE 1')">Itens</button> -->
+    <button class="botao" [routerLink]="['/item-base']">Itens</button>
+    <button class="botao" [routerLink]="['/produto']">Produtos</button>
     <button class="botao" onclick="console.log('TESTE 3')">Compras</button>
   </div>
 
