@@ -1,0 +1,32 @@
+<h1>Marcas</h1>
+<table class="tabela" mat-table [dataSource]="marcas">
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let marca">{{ marca.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="descricao">
+    <th mat-header-cell *matHeaderCellDef>Descrição</th>
+    <td mat-cell *matCellDef="let marca">{{ marca.descricao }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row">
+      <div class="botao_acao_list">
+        <button class="botao_acao" [routerLink]="['/marca', row.id, 'edicao']">
+          Edit
+        </button>
+        <button class="botao_acao" (click)="deleteMarca(row)">Del</button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
+</table>
+
+<button class="botao" mat-button [routerLink]="['/marca/criacao']">
+  Criar Marca
+</button>
+<button class="botao" mat-button [routerLink]="['/produto']">Voltar</button>
