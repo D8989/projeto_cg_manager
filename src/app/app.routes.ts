@@ -11,6 +11,7 @@ import { CriarProdutoComponent } from './produto/criar-produto/criar-produto.com
 import { ListarMarcaComponent } from './marca/listar-marca/listar-marca.component';
 import { CriarMarcaComponent } from './marca/criar-marca/criar-marca.component';
 import { EditarMarcaComponent } from './marca/editar-marca/editar-marca.component';
+import { EditarProdutoComponent } from './produto/editar-produto/editar-produto.component';
 
 export const routes: Routes = [
   {
@@ -57,6 +58,11 @@ export const routes: Routes = [
     path: 'produto/criacao',
     component: CriarProdutoComponent,
     title: 'Create produto',
+  },
+  {
+    path: 'produto/:id/edicao',
+    component: EditarProdutoComponent,
+    title: 'Edit produto',
   },
   {
     path: 'marca',

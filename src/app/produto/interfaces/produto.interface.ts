@@ -2,6 +2,8 @@ export interface IProduto {
   id: number;
   nome: string;
   descricao: string | null;
+  quantidade: number;
+  gramatura: string;
   marca: {
     id: number;
     nome: string;

@@ -4,6 +4,7 @@ import { IProduto } from './interfaces/produto.interface';
 import { IProdutoPaginado } from './interfaces/produto-paginado.interface';
 import { FormControl } from '@angular/forms';
 import { ICreateProduto } from './interfaces/create-produto.interface';
+import { IEditProduto } from './interfaces/edit-produto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,19 @@ export class ProdutoService {
 
   salvar(dto: ICreateProduto) {
     return this.http.post('http://localhost:3000/produto', dto);
+  }
+
+  editar(id: number, dto: IEditProduto) {
+    return this.http.put(
+      'http://localhost:3000/produto/ID'.replace('ID', id.toString()),
+      dto
+    );
+  }
+
+  getProduto(id: number) {
+    return this.http.get<IProduto>(
+      'http://localhost:3000/produto/ID'.replace('ID', id.toString())
+    );
   }
 
   checkNomeForm(nomeForm: FormControl<string | null>): string {

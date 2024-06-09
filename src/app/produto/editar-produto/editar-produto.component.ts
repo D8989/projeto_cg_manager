@@ -1,23 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
 import {
-  FormBuilder,
   FormControl,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ProdutoService } from '../produto.service';
-import { forkJoin, lastValueFrom } from 'rxjs';
-import { ItemBaseService } from '../../item-base/item-base.service';
-import { MarcaService } from '../../marca/marca.service';
 import { IMarca } from '../../marca/interfaces/marca.interface';
 import { IItemBase } from '../../item-base/interfaces/item-base.interface';
+import { ProdutoService } from '../produto.service';
+import { ItemBaseService } from '../../item-base/item-base.service';
+import { MarcaService } from '../../marca/marca.service';
+import { forkJoin, lastValueFrom } from 'rxjs';
+import { IProduto } from '../interfaces/produto.interface';
 
 @Component({
-  selector: 'app-criar-produto',
+  selector: 'app-editar-produto',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,10 +26,10 @@ import { IItemBase } from '../../item-base/interfaces/item-base.interface';
     RouterModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './criar-produto.component.html',
-  styleUrl: './criar-produto.component.css',
+  templateUrl: './editar-produto.component.html',
+  styleUrl: './editar-produto.component.css',
 })
-export class CriarProdutoComponent implements OnInit {
+export class EditarProdutoComponent implements OnInit {
   protected nomeForm = new FormControl('', [
     Validators.required,
     Validators.minLength(1),
@@ -56,13 +56,42 @@ export class CriarProdutoComponent implements OnInit {
   protected erroQuantidadeMsg = '';
   protected erroGramaturaMsg = '';
 
+  protected produto: IProduto;
   protected marcas: IMarca[] = [];
   protected itens: IItemBase[] = [];
   constructor(
     private produtoService: ProdutoService,
     private itemBaseService: ItemBaseService,
     private marcaService: MarcaService
-  ) {}
+  ) {
+    this.produto = {
+      id: 0,
+      nome: 'Desconhecido',
+      descricao: '-',
+      quantidade: 0,
+      gramatura: '-',
+      itemBase: {
+        id: 0,
+        nome: 'Item Desconhecido',
+        descricao: '-',
+        tipoItemBase: { id: 0, nome: 'Tipo Desconhecido' },
+      },
+      marca: { id: 0, nome: 'Marca Desconhecida', descricao: '-' },
+    };
+  }
+
+  @Input()
+  set id(prodId: string) {
+    this.produtoService.getProduto(parseInt(prodId)).subscribe({
+      next: (resp) => {
+        this.produto = resp;
+        this.setForms();
+      },
+      error: (erro) => {
+        alert(erro.error.message);
+      },
+    });
+  }
 
   ngOnInit(): void {
     forkJoin([
@@ -107,11 +136,13 @@ export class CriarProdutoComponent implements OnInit {
     );
   }
 
-  async salvar() {
+  async editar() {
     const nome = this.nomeForm.value ? this.nomeForm.value.trim() : null;
+
     const descricao = this.descricaoForm.value
       ? this.descricaoForm.value.trim()
       : null;
+
     const quantidade = this.quantidadeForm.value
       ? parseInt(this.quantidadeForm.value)
       : null;
@@ -145,7 +176,7 @@ export class CriarProdutoComponent implements OnInit {
     }
 
     await lastValueFrom(
-      this.produtoService.salvar({
+      this.produtoService.editar(this.produto.id, {
         nome: nome,
         descricao: descricao,
         quantidade: quantidade,
@@ -169,5 +200,22 @@ export class CriarProdutoComponent implements OnInit {
       this.quantidadeForm.invalid ||
       this.gramaturaForm.invalid
     );
+  }
+
+  compareMarca(m1Id: any, m2Id: any) {
+    return m1Id == m2Id;
+  }
+
+  compareItemBase(ib1Id: any, ib2Id: any) {
+    return ib1Id == ib2Id;
+  }
+
+  private setForms() {
+    this.nomeForm.setValue(this.produto.nome);
+    this.descricaoForm.setValue(this.produto.descricao);
+    this.quantidadeForm.setValue(this.produto.quantidade.toString());
+    this.gramaturaForm.setValue(this.produto.gramatura);
+    this.itemBaseSelectForm.setValue(this.produto.itemBase.id.toString());
+    this.marcaSelectForm.setValue(this.produto.marca.id.toString());
   }
 }
