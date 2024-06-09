@@ -6,6 +6,7 @@ import { CriarTipoItemBaseComponent } from './tipo-item-base/criar-tipo-item-bas
 import { EditarTipoItemBaseComponent } from './tipo-item-base/editar-tipo-item-base/editar-tipo-item-base.component';
 import { CriarItemBaseComponent } from './item-base/criar-item-base/criar-item-base.component';
 import { EditarItemBaseComponent } from './item-base/editar-item-base/editar-item-base.component';
+import { ListarProdutoComponent } from './produto/listar-produto/listar-produto.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,11 @@ export const routes: Routes = [
     path: 'tipo-item-base/:id/edicao',
     component: EditarTipoItemBaseComponent,
     title: 'edit tipo-item-base',
+  },
+  {
+    path: 'produto',
+    component: ListarProdutoComponent,
+    title: 'Produtos',
   },
   {
     path: '',

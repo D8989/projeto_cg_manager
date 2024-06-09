@@ -1,0 +1,48 @@
+<h1>Produtos</h1>
+<table mat-table [dataSource]="produtos">
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let prod">{{ prod.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="marca">
+    <th mat-header-cell *matHeaderCellDef>Marca</th>
+    <td mat-cell *matCellDef="let prod">{{ prod.marca.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="quantidade">
+    <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+    <td mat-cell *matCellDef="let prod">
+      {{ prod.quantidade }} {{ prod.gramatura }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="item-base">
+    <th mat-header-cell *matHeaderCellDef>Item base</th>
+    <td mat-cell *matCellDef="let prod">{{ prod.itemBase.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row">
+      <div class="botao_acao_list">
+        <button
+          class="botao_acao"
+          [routerLink]="['/produto', row.id, 'edicao']"
+        >
+          Edit
+        </button>
+        <button class="botao_acao" (click)="desativaProduto(row)">Del</button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
+</table>
+
+<button class="botao" mat-button [routerLink]="['/produto/criacao']">
+  Criar produto
+</button>
+<button class="botao" mat-button [routerLink]="['/marca']">Marcas</button>
+<button class="botao" mat-button [routerLink]="['/']">Voltar</button>
