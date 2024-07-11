@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
 import { RouterModule } from '@angular/router';
 import { ICompraRow } from '../interfaces/compra-row.interface';
 import { CompraService } from '../compra.service';
 import { environment } from '../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { AddPagamentoDialogComponent } from '../add-pagamento-dialog/add-pagamento-dialog.component';
 
 @Component({
   selector: 'app-listar-compra',
@@ -20,7 +22,9 @@ export class ListarCompraComponent implements OnInit {
     'dataCompra',
     'lojaNome',
     'valorTotal',
+    'actions',
   ];
+  protected dialog = inject(MatDialog);
 
   constructor(private compraService: CompraService) {}
 
@@ -37,5 +41,15 @@ export class ListarCompraComponent implements OnInit {
     });
 
     console.log(this.compras);
+  }
+
+  openPagamentoDialog() {
+    const dialogRef = this.dialog.open(AddPagamentoDialogComponent, {
+      data: {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('DIALOG FECHADO');
+      console.log(result);
+    });
   }
 }

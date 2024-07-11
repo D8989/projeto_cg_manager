@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Inserir Pagamento</h2>
+<mat-form-field>
+  <mat-label>Nome</mat-label>
+  <input
+    matInput
+    type="text"
+    placeholder="nome pagante"
+    [formControl]="nomeForm"
+    (blur)="checkNomeForm()"
+    required
+  />
+  @if (nomeForm.invalid) {
+  <mat-error>{{ erroNomeMsg }}</mat-error>
+  }
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Valor</mat-label>
+  <input
+    matInput
+    type="number"
+    placeholder="0.01"
+    [formControl]="valorForm"
+    (blur)="checkNumberForm()"
+    required
+  />
+  @if (valorForm.invalid) {
+  <mat-error>{{ erroValorMsg }}</mat-error>
+  }
+</mat-form-field>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onSaveClick()">Ok</button>
+  <!-- <button mat-button [mat-dialog-close]="animal()" cdkFocusInitial>Ok</button> -->
+</mat-dialog-actions>
