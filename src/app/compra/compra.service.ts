@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ICompraRowPaginado } from './interfaces/compra-row-paginado.interface';
 import { FormControl } from '@angular/forms';
+import { ICreatePagamento } from './interfaces/create-pagamento.interface';
+import { IMessageResp } from '../common/res/message-resp.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,14 @@ export class CompraService {
   list() {
     return this.http.post<ICompraRowPaginado>(
       environment.apiUrl + 'compra/list',
+      {}
+    );
+  }
+
+  addPagamento(dto: ICreatePagamento) {
+    return this.http.post<IMessageResp>(
+      environment.apiUrl + 'control-compra/add-pagamento',
+      dto,
       {}
     );
   }

@@ -12,11 +12,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CompraService } from '../compra.service';
 import { ICreatePagamento } from '../interfaces/create-pagamento.interface';
 import { IFormaPagamento } from '../interfaces/forma-pagamento.interface';
+import { IAddPagDialogData } from '../interfaces/add-pag-dialog-data.interface';
+import { IMessageResp } from '../../common/res/message-resp.interface';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-add-pagamento-dialog',
@@ -27,7 +30,11 @@ import { IFormaPagamento } from '../interfaces/forma-pagamento.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPagamentoDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<AddPagamentoDialogComponent>);
+  private readonly dialogRef = inject(
+    MatDialogRef<AddPagamentoDialogComponent>
+  );
+  private readonly data = inject<IAddPagDialogData>(MAT_DIALOG_DATA);
+
   protected nomeForm = new FormControl('', [
     Validators.required,
     Validators.maxLength(100),
@@ -55,20 +62,26 @@ export class AddPagamentoDialogComponent {
     this.dialogRef.close();
   }
 
-  onSaveClick(): void {
-    console.log(this.nomeForm.value);
-    console.log(this.valorForm.value);
-    console.log(this.pagSelectedForm.value);
+  async onSaveClick(): Promise<void> {
+    const respMessage: IMessageResp = { message: '' };
 
-    this.dialogRef.close({
-      nome: this.nomeForm.value,
-      valor: this.valorForm.value,
-    });
-    // console.log('DTO: ', this.createPagamentoDto);
+    await lastValueFrom(
+      this.compraService.addPagamento({
+        compraId: this.data.compraId,
+        formaPagamento: this.pagSelectedForm.value!,
+        nomeUsuario: this.nomeForm.value!,
+        valor: this.valorForm.value!,
+      })
+    )
+      .then((resp) => {
+        respMessage.id = resp.id;
+        respMessage.message = resp.message;
+      })
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
 
-    // this.dialogRef
-    //   .beforeClosed()
-    //   .subscribe(() => this.dialogRef.close(this.data));
+    this.dialogRef.close(respMessage);
   }
 
   checkNomeForm() {

@@ -3,5 +3,5 @@ export interface ICompraRow {
   codigo: number;
   dataCompra: Date;
   lojaNome: string;
-  valorTota: number;
+  valorTotal: number;
 }
