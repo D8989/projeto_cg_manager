@@ -29,7 +29,9 @@
           Add pagamento
         </button>
         <button mat-raised-button>Add produto</button>
-        <button mat-raised-button>Visualizar</button>
+        <button mat-raised-button [routerLink]="['/compra', row.id]">
+          Visualizar
+        </button>
       </div>
     </td>
   </ng-container>
