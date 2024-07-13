@@ -36,4 +36,11 @@ export class CompraService {
     }
     return '';
   }
+
+  checkPagSelectedForm(f: FormControl<string | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve escolher a forma de pagamento';
+    }
+    return '';
+  }
 }
