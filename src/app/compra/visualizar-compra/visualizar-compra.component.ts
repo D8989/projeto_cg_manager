@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
 import { RouterModule } from '@angular/router';
+import { ICompra } from '../interfaces/compra.interface';
+import { lastValueFrom } from 'rxjs';
+import { CompraService } from '../compra.service';
+import { ICompraItem } from '../interfaces/compra-item.interface';
+import { ICompraPagamento } from '../interfaces/compra-pagamento.interface';
+import { IFormaPagamento } from '../interfaces/forma-pagamento.interface';
 
 @Component({
   selector: 'app-visualizar-compra',
@@ -10,4 +16,81 @@ import { RouterModule } from '@angular/router';
   templateUrl: './visualizar-compra.component.html',
   styleUrl: './visualizar-compra.component.css',
 })
-export class VisualizarCompraComponent {}
+export class VisualizarCompraComponent implements OnInit {
+  private compraId: number = 0;
+  private formasPagamentos: IFormaPagamento[] = [];
+  protected compra: ICompra | null = null;
+  protected itens: ICompraItem[] = [];
+  protected pagamentos: ICompraPagamento[] = [];
+
+  protected itemColumnsToDisplay = [
+    'nome',
+    'quantidade',
+    'valor_unidade',
+    'valor_total',
+    'actions',
+  ];
+  protected pagamentoColumnsToDisplay = [
+    'nome',
+    'forma_pagamento',
+    'valor',
+    'actions',
+  ];
+
+  constructor(private compraService: CompraService) {}
+
+  @Input()
+  set id(id: string) {
+    this.compraId = parseInt(id);
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.formasPagamentos = this.compraService.getFormasPagamento();
+    await lastValueFrom(this.compraService.getCompra(this.compraId))
+      .then((resp) => {
+        this.compra = resp;
+        this.itens = resp.itens || [];
+        this.pagamentos = resp.pagamentos || [];
+
+        this.pagamentos.forEach((p, i, self) => {
+          self[i].formaPagamentoView =
+            this.formasPagamentos.find((fp) => fp.value === p.formaPagamento)
+              ?.viewValue || 'PAG';
+        });
+      })
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
+  }
+
+  async removerItem(item: ICompraItem) {
+    await lastValueFrom(this.compraService.removerItem(this.compraId, item.id))
+      .then(async () => {
+        await this.resetCompra();
+      })
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
+  }
+
+  async removerPagamento(pagamento: ICompraPagamento) {
+    await lastValueFrom(
+      this.compraService.removerPagamento(this.compraId, pagamento.id)
+    )
+      .then(async () => {
+        await this.resetCompra();
+      })
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
+  }
+
+  private async resetCompra() {
+    this.compra = await lastValueFrom(
+      this.compraService.getCompra(this.compraId)
+    );
+
+    this.itens = this.compra.itens;
+    this.pagamentos = this.compra.pagamentos;
+  }
+}

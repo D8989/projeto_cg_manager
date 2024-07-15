@@ -51,11 +51,7 @@ export class AddPagamentoDialogComponent {
   protected formasPagamentos: IFormaPagamento[] = [];
 
   constructor(private compraService: CompraService) {
-    this.formasPagamentos = [
-      { value: 'DINHEIRO', viewValue: 'dinheiro' },
-      { value: 'CREDITO', viewValue: 'crédito' },
-      { value: 'DEBITO', viewValue: 'debito' },
-    ];
+    this.formasPagamentos = this.compraService.getFormasPagamento();
   }
 
   onNoClick(): void {

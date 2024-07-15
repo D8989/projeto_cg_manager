@@ -5,6 +5,8 @@ import { ICompraRowPaginado } from './interfaces/compra-row-paginado.interface';
 import { FormControl } from '@angular/forms';
 import { ICreatePagamento } from './interfaces/create-pagamento.interface';
 import { IMessageResp } from '../common/res/message-resp.interface';
+import { ICompra } from './interfaces/compra.interface';
+import { IFormaPagamento } from './interfaces/forma-pagamento.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +25,29 @@ export class CompraService {
     return this.http.post<IMessageResp>(
       environment.apiUrl + 'control-compra/add-pagamento',
       dto,
+      {}
+    );
+  }
+
+  getCompra(compraId: number) {
+    return this.http.get<ICompra>(
+      environment.apiUrl + `compra/${compraId}`,
+      {}
+    );
+  }
+
+  removerItem(compraId: number, itemId: number) {
+    return this.http.delete<IMessageResp>(
+      environment.apiUrl +
+        `control-compra/compra/${compraId}/item-compra/${itemId}`,
+      {}
+    );
+  }
+
+  removerPagamento(compraId: number, pagId: number) {
+    return this.http.delete<IMessageResp>(
+      environment.apiUrl +
+        `control-compra/compra/${compraId}/pagamento/${pagId}`,
       {}
     );
   }
@@ -52,5 +77,13 @@ export class CompraService {
       return 'Deve escolher a forma de pagamento';
     }
     return '';
+  }
+
+  getFormasPagamento(): IFormaPagamento[] {
+    return [
+      { value: 'DINHEIRO', viewValue: 'dinheiro' },
+      { value: 'CREDITO', viewValue: 'crédito' },
+      { value: 'DEBITO', viewValue: 'debito' },
+    ];
   }
 }
