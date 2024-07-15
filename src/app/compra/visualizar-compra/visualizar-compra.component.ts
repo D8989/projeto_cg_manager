@@ -11,6 +11,7 @@ import { IFormaPagamento } from '../interfaces/forma-pagamento.interface';
 import { AddPagamentoDialogComponent } from '../add-pagamento-dialog/add-pagamento-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMessageComponent } from '../../common/dialog/dialog-message/dialog-message.component';
+import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
 
 @Component({
   selector: 'app-visualizar-compra',
@@ -101,6 +102,18 @@ export class VisualizarCompraComponent implements OnInit {
     });
   }
 
+  openItemDialog() {
+    const dialogRef = this.dialog.open(AddItemDialogComponent, {
+      data: { compraId: this.compraId },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.resetCompra();
+      if (result?.message) {
+        this.dialog.open(DialogMessageComponent, { data: result });
+      }
+    });
+  }
+
   private async resetCompra() {
     this.compra = await lastValueFrom(
       this.compraService.getCompra(this.compraId)
@@ -108,5 +121,11 @@ export class VisualizarCompraComponent implements OnInit {
 
     this.itens = this.compra.itens;
     this.pagamentos = this.compra.pagamentos;
+
+    this.pagamentos.forEach((p, i, self) => {
+      self[i].formaPagamentoView =
+        this.formasPagamentos.find((fp) => fp.value === p.formaPagamento)
+          ?.viewValue || 'PAG';
+    });
   }
 }

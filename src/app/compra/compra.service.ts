@@ -7,6 +7,7 @@ import { ICreatePagamento } from './interfaces/create-pagamento.interface';
 import { IMessageResp } from '../common/res/message-resp.interface';
 import { ICompra } from './interfaces/compra.interface';
 import { IFormaPagamento } from './interfaces/forma-pagamento.interface';
+import { ICreateItem } from './interfaces/create-item.interface.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,14 @@ export class CompraService {
   addPagamento(dto: ICreatePagamento) {
     return this.http.post<IMessageResp>(
       environment.apiUrl + 'control-compra/add-pagamento',
+      dto,
+      {}
+    );
+  }
+
+  addItem(dto: ICreateItem) {
+    return this.http.post<IMessageResp>(
+      environment.apiUrl + 'control-compra/add-item-compra',
       dto,
       {}
     );
@@ -79,6 +88,34 @@ export class CompraService {
   checkPagSelectedForm(f: FormControl<string | null>): string {
     if (f.hasError('required')) {
       return 'Deve escolher a forma de pagamento';
+    }
+    return '';
+  }
+
+  checkProdSelectedForm(f: FormControl<string | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve escolher o produto';
+    }
+    return '';
+  }
+
+  checkQuantidadeForm(f: FormControl<number | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve informar a quantidade de produto';
+    }
+    return '';
+  }
+
+  checkPrecoUnidForm(f: FormControl<number | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve informar o valor do preço da unidade';
+    }
+    return '';
+  }
+
+  checkGramaturaForm(f: FormControl<string | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve informar a gramatura do item';
     }
     return '';
   }
