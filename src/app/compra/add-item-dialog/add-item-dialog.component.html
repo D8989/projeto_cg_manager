@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>Inserir Item</h2>
+<mat-form-field>
+  <mat-label>Selecione Produto</mat-label>
+  <mat-select
+    [formControl]="produtoSelectForm"
+    (blur)="checkProdutoSelectForm()"
+    required
+  >
+    <mat-option *ngFor="let prod of produtos" [value]="prod.id">{{
+      prod.nome
+    }}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="produtoSelectForm.invalid">{{
+    erroProdSelectMsg
+  }}</mat-error>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Quantidade</mat-label>
+  <input
+    matInput
+    placeholder="Quantidade"
+    [formControl]="quantidadeForm"
+    (blur)="checkQtdForm()"
+    type="number"
+    required
+  />
+  <mat-error *ngIf="quantidadeForm.invalid">{{ erroQuantidadeMsg }}</mat-error>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Preço unidade</mat-label>
+  <input
+    matInput
+    placeholder="preço únidade"
+    [formControl]="precoUnidadeForm"
+    (blur)="checkPrecoUnidForm()"
+    type="number"
+    required
+  />
+  <mat-error *ngIf="precoUnidadeForm.invalid">{{
+    erroPrecoUnidadeMsg
+  }}</mat-error>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Gramatura</mat-label>
+  <input
+    matInput
+    placeholder="Gramatura"
+    [formControl]="gramaturaForm"
+    (blur)="checkGramaturaForm()"
+    required
+  />
+  <mat-error *ngIf="gramaturaForm.invalid">{{ erroGramaturaMsg }}</mat-error>
+</mat-form-field>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSaveClick()">Ok</button>
+</mat-dialog-actions>

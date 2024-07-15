@@ -12,6 +12,8 @@ import { ListarMarcaComponent } from './marca/listar-marca/listar-marca.componen
 import { CriarMarcaComponent } from './marca/criar-marca/criar-marca.component';
 import { EditarMarcaComponent } from './marca/editar-marca/editar-marca.component';
 import { EditarProdutoComponent } from './produto/editar-produto/editar-produto.component';
+import { ListarCompraComponent } from './compra/listar-compra/listar-compra.component';
+import { VisualizarCompraComponent } from './compra/visualizar-compra/visualizar-compra.component';
 
 export const routes: Routes = [
   {
@@ -78,6 +80,16 @@ export const routes: Routes = [
     path: 'marca/:id/edicao',
     component: EditarMarcaComponent,
     title: 'Edit marca',
+  },
+  {
+    path: 'compra',
+    component: ListarCompraComponent,
+    title: 'List compra',
+  },
+  {
+    path: 'compra/:id',
+    component: VisualizarCompraComponent,
+    title: 'View compra',
   },
   {
     path: '',
