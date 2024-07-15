@@ -68,7 +68,7 @@
   <mat-label>Escolha o item-base</mat-label>
   <mat-select
     [formControl]="itemBaseSelectForm"
-    (blur)="(checkItemBaseSelectForm)"
+    (blur)="checkItemBaseSelectForm()"
     required
   >
     @for(item of itens; track $index) {
