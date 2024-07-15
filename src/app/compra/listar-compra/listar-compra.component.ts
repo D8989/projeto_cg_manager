@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPagamentoDialogComponent } from '../add-pagamento-dialog/add-pagamento-dialog.component';
 import { DialogMessageComponent } from '../../common/dialog/dialog-message/dialog-message.component';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-listar-compra',
@@ -38,6 +39,16 @@ export class ListarCompraComponent implements OnInit {
         alert(erro.error.message);
       },
     });
+  }
+
+  async removerCompra(compra: ICompraRow) {
+    lastValueFrom(this.compraService.softDelete(compra.id))
+      .then(async () => {
+        this.compras = (await lastValueFrom(this.compraService.list())).dados;
+      })
+      .catch((erro) => {
+        alert(erro.error.message);
+      });
   }
 
   openPagamentoDialog(row: ICompraRow) {

@@ -52,6 +52,10 @@ export class CompraService {
     );
   }
 
+  softDelete(compraId: number) {
+    return this.http.delete(environment.apiUrl + `compra/${compraId}/soft`, {});
+  }
+
   checkNomeForm(nomeForm: FormControl<string | null>): string {
     if (nomeForm.hasError('required')) {
       return 'O nome é obrigatório';

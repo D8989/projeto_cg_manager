@@ -32,6 +32,7 @@
         <button mat-raised-button [routerLink]="['/compra', row.id]">
           Visualizar
         </button>
+        <button mat-raised-button (click)="removerCompra(row)">Delete</button>
       </div>
     </td>
   </ng-container>
