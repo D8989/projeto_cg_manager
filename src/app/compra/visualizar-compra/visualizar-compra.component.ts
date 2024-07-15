@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
 import { RouterModule } from '@angular/router';
 import { ICompra } from '../interfaces/compra.interface';
@@ -8,6 +8,9 @@ import { CompraService } from '../compra.service';
 import { ICompraItem } from '../interfaces/compra-item.interface';
 import { ICompraPagamento } from '../interfaces/compra-pagamento.interface';
 import { IFormaPagamento } from '../interfaces/forma-pagamento.interface';
+import { AddPagamentoDialogComponent } from '../add-pagamento-dialog/add-pagamento-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogMessageComponent } from '../../common/dialog/dialog-message/dialog-message.component';
 
 @Component({
   selector: 'app-visualizar-compra',
@@ -18,6 +21,7 @@ import { IFormaPagamento } from '../interfaces/forma-pagamento.interface';
 })
 export class VisualizarCompraComponent implements OnInit {
   private compraId: number = 0;
+  private dialog = inject(MatDialog);
   private formasPagamentos: IFormaPagamento[] = [];
   protected compra: ICompra | null = null;
   protected itens: ICompraItem[] = [];
@@ -83,6 +87,18 @@ export class VisualizarCompraComponent implements OnInit {
       .catch((erro) => {
         alert(erro.error.message);
       });
+  }
+
+  openPagamentoDialog() {
+    const dialogRef = this.dialog.open(AddPagamentoDialogComponent, {
+      data: { compraId: this.compraId },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.resetCompra();
+      if (result?.message) {
+        this.dialog.open(DialogMessageComponent, { data: result });
+      }
+    });
   }
 
   private async resetCompra() {

@@ -4,10 +4,6 @@ import { MaterialModule } from '../../material/material.module';
 import { RouterModule } from '@angular/router';
 import { ICompraRow } from '../interfaces/compra-row.interface';
 import { CompraService } from '../compra.service';
-import { environment } from '../../../environments/environment';
-import { MatDialog } from '@angular/material/dialog';
-import { AddPagamentoDialogComponent } from '../add-pagamento-dialog/add-pagamento-dialog.component';
-import { DialogMessageComponent } from '../../common/dialog/dialog-message/dialog-message.component';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -26,7 +22,6 @@ export class ListarCompraComponent implements OnInit {
     'valorTotal',
     'actions',
   ];
-  private dialog = inject(MatDialog);
 
   constructor(private compraService: CompraService) {}
 
@@ -49,16 +44,5 @@ export class ListarCompraComponent implements OnInit {
       .catch((erro) => {
         alert(erro.error.message);
       });
-  }
-
-  openPagamentoDialog(row: ICompraRow) {
-    const dialogRef = this.dialog.open(AddPagamentoDialogComponent, {
-      data: { compraId: row.id },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result?.message) {
-        this.dialog.open(DialogMessageComponent, { data: result });
-      }
-    });
   }
 }
