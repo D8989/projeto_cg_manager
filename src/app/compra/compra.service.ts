@@ -120,6 +120,20 @@ export class CompraService {
     return '';
   }
 
+  checkLojaSelectForm(f: FormControl<string | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve selecionar a loja';
+    }
+    return '';
+  }
+
+  checkDataForm(f: FormControl<Date | null>): string {
+    if (f.hasError('required')) {
+      return 'Deve informar o dia da compra';
+    }
+    return '';
+  }
+
   getFormasPagamento(): IFormaPagamento[] {
     return [
       { value: 'DINHEIRO', viewValue: 'dinheiro' },
