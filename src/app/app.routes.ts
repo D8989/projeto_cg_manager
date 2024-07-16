@@ -15,6 +15,7 @@ import { EditarProdutoComponent } from './produto/editar-produto/editar-produto.
 import { ListarCompraComponent } from './compra/listar-compra/listar-compra.component';
 import { VisualizarCompraComponent } from './compra/visualizar-compra/visualizar-compra.component';
 import { CriarCompraComponent } from './compra/criar-compra/criar-compra.component';
+import { ListarLojaComponent } from './loja/listar-loja/listar-loja.component';
 
 export const routes: Routes = [
   {
@@ -96,6 +97,11 @@ export const routes: Routes = [
     path: 'compra/criacao',
     component: CriarCompraComponent,
     title: 'Create compra',
+  },
+  {
+    path: 'loja',
+    component: ListarLojaComponent,
+    title: 'List loja',
   },
   {
     path: '',
