@@ -1,0 +1,7 @@
+.botao {
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+  padding: 5px;
+  background-color: #e4ddc6;
+}
