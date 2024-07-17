@@ -18,6 +18,7 @@ import { CriarCompraComponent } from './compra/criar-compra/criar-compra.compone
 import { ListarLojaComponent } from './loja/listar-loja/listar-loja.component';
 import { ListarTipoLojaComponent } from './tipo-loja/listar-tipo-loja/listar-tipo-loja.component';
 import { CriarTipoLojaComponent } from './tipo-loja/criar-tipo-loja/criar-tipo-loja.component';
+import { EditarTipoLojaComponent } from './tipo-loja/editar-tipo-loja/editar-tipo-loja.component';
 
 export const routes: Routes = [
   {
@@ -114,6 +115,11 @@ export const routes: Routes = [
     path: 'tipo-loja/criacao',
     component: CriarTipoLojaComponent,
     title: 'Create tipo-loja',
+  },
+  {
+    path: 'tipo-loja/:id/edicao',
+    component: EditarTipoLojaComponent,
+    title: 'Edit tipo-loja',
   },
   {
     path: '',

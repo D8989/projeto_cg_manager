@@ -5,6 +5,7 @@ import { ITipoLojaPaginado } from './interfaces/tipo-loja-paginado.interface';
 import { ICreateTipoLoja } from './interfaces/create-tipo-loja.interface';
 import { ITipoLoja } from './interfaces/tipo-loja.interface';
 import { FormControl } from '@angular/forms';
+import { IUpdateTipoLoja } from './interfaces/update-tipo-loja.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,21 @@ export class TipoLojaService {
 
   insert(dto: ICreateTipoLoja) {
     return this.http.post<ITipoLoja>(environment.apiUrl + 'tipo-loja', dto, {});
+  }
+
+  getTipo(id: number) {
+    return this.http.get<ITipoLoja>(
+      `http://localhost:3000/tipo-loja/ID`.replace('ID', id.toString()),
+      {}
+    );
+  }
+
+  update(id: number, dto: IUpdateTipoLoja) {
+    return this.http.put<ITipoLoja>(
+      `http://localhost:3000/tipo-loja/ID`.replace('ID', id.toString()),
+      dto,
+      {}
+    );
   }
 
   checkNomeForm(nomeForm: FormControl<string | null>): string {
