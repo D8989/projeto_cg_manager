@@ -8,7 +8,9 @@
 
   <ng-container matColumnDef="dataCompra">
     <th mat-header-cell *matHeaderCellDef>Data Compra</th>
-    <td mat-cell *matCellDef="let compra">{{ compra.dataCompra }}</td>
+    <td mat-cell *matCellDef="let compra">
+      {{ compra.dataCompra | date : "dd/MM/yyyy" }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="lojaNome">

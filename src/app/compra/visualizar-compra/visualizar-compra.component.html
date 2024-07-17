@@ -3,7 +3,7 @@
 <div>
   <h2>Dados gerais</h2>
   <p>Código: {{ compra?.codigo }}</p>
-  <p>data: {{ compra?.dataCompra }}</p>
+  <p>data: {{ compra?.dataCompra | date : "dd/MM/yyyy" }}</p>
   <p>valor total: R$ {{ compra?.valorTotal }}</p>
 </div>
 
