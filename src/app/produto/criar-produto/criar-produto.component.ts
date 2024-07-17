@@ -39,12 +39,10 @@ export class CriarProdutoComponent implements OnInit {
   protected marcaSelectForm = new FormControl('', [Validators.required]);
   protected itemBaseSelectForm = new FormControl('', [Validators.required]);
   protected quantidadeForm = new FormControl('', [
-    Validators.required,
     Validators.min(1),
     Validators.max(100000),
   ]);
   protected gramaturaForm = new FormControl('', [
-    Validators.required,
     Validators.pattern(/g$|Kg$|l$|ml$/),
     Validators.minLength(1),
     Validators.maxLength(2),
@@ -127,14 +125,6 @@ export class CriarProdutoComponent implements OnInit {
       alert('Nome está com valor inválido');
       return;
     }
-    if (!quantidade) {
-      alert('Quantiaded inválida');
-      return;
-    }
-    if (!gramatura) {
-      alert('Gramatura inválida');
-      return;
-    }
     if (!marcaId || Number.isNaN(marcaId)) {
       alert('Marca escolhida está com valor inválido');
       return;
@@ -149,9 +139,10 @@ export class CriarProdutoComponent implements OnInit {
         nome: nome,
         descricao: descricao,
         quantidade: quantidade,
-        gramatura: gramatura,
+        gramatura: gramatura || null,
         marcaId: marcaId,
         itemBaseId: itemBaseId,
+        hasEmbalagem: quantidade && gramatura ? true : false,
       })
     )
       .then((resp) => resp)

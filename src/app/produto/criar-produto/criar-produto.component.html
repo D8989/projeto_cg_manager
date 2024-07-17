@@ -26,7 +26,6 @@
     [formControl]="quantidadeForm"
     (blur)="checkQuantidadeFrom()"
     type="number"
-    required
   />
   @if(quantidadeForm.invalid){
   <mat-error>{{ erroQuantidadeMsg }}</mat-error>
@@ -40,7 +39,6 @@
     placeholder="Gramatura"
     [formControl]="gramaturaForm"
     (blur)="checkGramaturaFrom()"
-    required
   />
   <mat-hint>Valores: g, Kg, m ou ml</mat-hint>
   @if (gramaturaForm.invalid){
@@ -80,7 +78,9 @@
   }
 </mat-form-field>
 
-<button mat-button (click)="salvar()" [disabled]="isSalvarDissable()">
-  Salvar
-</button>
-<button class="botao" mat-button [routerLink]="['/produto']">Cancelar</button>
+<div>
+  <button mat-button (click)="salvar()" [disabled]="isSalvarDissable()">
+    Salvar
+  </button>
+  <button class="botao" mat-button [routerLink]="['/produto']">Cancelar</button>
+</div>
