@@ -14,6 +14,12 @@ import { EditarMarcaComponent } from './marca/editar-marca/editar-marca.componen
 import { EditarProdutoComponent } from './produto/editar-produto/editar-produto.component';
 import { ListarCompraComponent } from './compra/listar-compra/listar-compra.component';
 import { VisualizarCompraComponent } from './compra/visualizar-compra/visualizar-compra.component';
+import { CriarCompraComponent } from './compra/criar-compra/criar-compra.component';
+import { ListarLojaComponent } from './loja/listar-loja/listar-loja.component';
+import { ListarTipoLojaComponent } from './tipo-loja/listar-tipo-loja/listar-tipo-loja.component';
+import { CriarTipoLojaComponent } from './tipo-loja/criar-tipo-loja/criar-tipo-loja.component';
+import { EditarTipoLojaComponent } from './tipo-loja/editar-tipo-loja/editar-tipo-loja.component';
+import { CriarLojaComponent } from './loja/criar-loja/criar-loja.component';
 
 export const routes: Routes = [
   {
@@ -87,9 +93,39 @@ export const routes: Routes = [
     title: 'List compra',
   },
   {
-    path: 'compra/:id',
+    path: 'compra/:id/visualizar',
     component: VisualizarCompraComponent,
     title: 'View compra',
+  },
+  {
+    path: 'compra/criacao',
+    component: CriarCompraComponent,
+    title: 'Create compra',
+  },
+  {
+    path: 'loja',
+    component: ListarLojaComponent,
+    title: 'List loja',
+  },
+  {
+    path: 'loja/criacao',
+    component: CriarLojaComponent,
+    title: 'Create loja',
+  },
+  {
+    path: 'tipo-loja',
+    component: ListarTipoLojaComponent,
+    title: 'List tipo-loja',
+  },
+  {
+    path: 'tipo-loja/criacao',
+    component: CriarTipoLojaComponent,
+    title: 'Create tipo-loja',
+  },
+  {
+    path: 'tipo-loja/:id/edicao',
+    component: EditarTipoLojaComponent,
+    title: 'Edit tipo-loja',
   },
   {
     path: '',
