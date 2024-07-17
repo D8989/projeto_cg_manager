@@ -8,7 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MAT_DATE_LOCALE,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { CompraService } from '../compra.service';
 import { ILoja } from '../../loja/interfaces/loja.interface';
 import { LojaService } from '../../loja/loja.service';
@@ -19,7 +22,10 @@ import { DialogMessageComponent } from '../../common/dialog/dialog-message/dialo
 @Component({
   selector: 'app-criar-compra',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+  ],
   imports: [
     CommonModule,
     MaterialModule,
