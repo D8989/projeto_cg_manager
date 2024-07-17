@@ -7,7 +7,9 @@ import { ICreatePagamento } from './interfaces/create-pagamento.interface';
 import { IMessageResp } from '../common/res/message-resp.interface';
 import { ICompra } from './interfaces/compra.interface';
 import { IFormaPagamento } from './interfaces/forma-pagamento.interface';
-import { ICreateItem } from './interfaces/create-item.interface.interface';
+import { ICreateItem } from './interfaces/create-item.interface';
+import { ICreateCompra } from './interfaces/create-compra.interface';
+import { ICompraRow } from './interfaces/compra-row.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +65,10 @@ export class CompraService {
 
   softDelete(compraId: number) {
     return this.http.delete(environment.apiUrl + `compra/${compraId}/soft`, {});
+  }
+
+  insert(dto: ICreateCompra) {
+    return this.http.post<ICompraRow>(environment.apiUrl + 'compra', dto, {});
   }
 
   checkNomeForm(nomeForm: FormControl<string | null>): string {

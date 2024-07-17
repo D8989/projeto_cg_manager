@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
 import {
   FormControl,
@@ -10,6 +10,11 @@ import {
 import { RouterModule } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CompraService } from '../compra.service';
+import { ILoja } from '../../loja/interfaces/loja.interface';
+import { LojaService } from '../../loja/loja.service';
+import { lastValueFrom } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogMessageComponent } from '../../common/dialog/dialog-message/dialog-message.component';
 
 @Component({
   selector: 'app-criar-compra',
@@ -25,11 +30,9 @@ import { CompraService } from '../compra.service';
   templateUrl: './criar-compra.component.html',
   styleUrl: './criar-compra.component.css',
 })
-export class CriarCompraComponent {
-  protected lojas: any[] = [
-    { id: 1, nome: 'loja 1' },
-    { id: 2, nome: 'loja 2' },
-  ];
+export class CriarCompraComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  protected lojas: ILoja[] = [];
 
   protected lojaSelectForm = new FormControl('', [Validators.required]);
   protected erroLojaSeletFormMsg = '';
@@ -37,10 +40,47 @@ export class CriarCompraComponent {
   protected dataForm = new FormControl(new Date(), [Validators.required]);
   protected erroDataFormMsg = '';
 
-  constructor(private compraService: CompraService) {}
+  constructor(
+    private compraService: CompraService,
+    private lojaService: LojaService
+  ) {}
+
+  ngOnInit(): void {
+    this.lojaService.list().subscribe({
+      next: (resp) => {
+        this.lojas = resp.dados;
+      },
+      error: (erro) => {
+        alert(erro.error.message);
+      },
+    });
+  }
 
   async salvar() {
-    console.log(this.dataForm.value?.toISOString());
+    const dataStr = this.dataForm.value?.toISOString();
+    if (!dataStr) {
+      alert('Valor da data inválido');
+      return;
+    }
+
+    const lIdStr = this.lojaSelectForm.value;
+    if (!lIdStr) {
+      alert('Valor do identificador da loja inválido');
+      return;
+    }
+
+    await lastValueFrom(
+      this.compraService.insert({
+        dataCompraStr: dataStr,
+        lojaId: parseInt(lIdStr),
+      })
+    ).then((resp) => {
+      if (resp) {
+        this.dialog.open(DialogMessageComponent, {
+          data: { id: resp.id, message: 'Compra adicionada com sucesso!' },
+        });
+      }
+    });
 
     return;
   }

@@ -25,7 +25,10 @@
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let row">
       <div class="botao_acao_list">
-        <button mat-raised-button [routerLink]="['/compra', row.id]">
+        <button
+          mat-raised-button
+          [routerLink]="['/compra', row.id, 'visualizar']"
+        >
           Visualizar
         </button>
         <button mat-raised-button (click)="removerCompra(row)">Delete</button>
