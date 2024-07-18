@@ -4,4 +4,5 @@ export interface ICompraItem {
   gramatura: string;
   produtoNome: string;
   quantidade: string;
+  valorTotal: number;
 }

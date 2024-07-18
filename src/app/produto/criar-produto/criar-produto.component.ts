@@ -39,13 +39,13 @@ export class CriarProdutoComponent implements OnInit {
   protected marcaSelectForm = new FormControl('', [Validators.required]);
   protected itemBaseSelectForm = new FormControl('', [Validators.required]);
   protected quantidadeForm = new FormControl('', [
-    Validators.min(1),
+    Validators.min(0.001),
     Validators.max(100000),
   ]);
   protected gramaturaForm = new FormControl('', [
-    Validators.pattern(/g$|Kg$|l$|ml$/),
+    Validators.pattern(/g$|Kg$|l$|ml$|unid$/),
     Validators.minLength(1),
-    Validators.maxLength(2),
+    Validators.maxLength(4),
   ]);
 
   protected erroNomeMsg = '';

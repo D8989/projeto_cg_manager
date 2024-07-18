@@ -39,15 +39,13 @@ export class EditarProdutoComponent implements OnInit {
   protected marcaSelectForm = new FormControl('', [Validators.required]);
   protected itemBaseSelectForm = new FormControl('', [Validators.required]);
   protected quantidadeForm = new FormControl('', [
-    Validators.required,
     Validators.min(1),
     Validators.max(100000),
   ]);
   protected gramaturaForm = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/g$|Kg$|l$|ml$/),
+    Validators.pattern(/g$|Kg$|l$|ml$|unid$/),
     Validators.minLength(1),
-    Validators.maxLength(2),
+    Validators.maxLength(4),
   ]);
 
   protected erroNomeMsg = '';
@@ -144,7 +142,7 @@ export class EditarProdutoComponent implements OnInit {
       : null;
 
     const quantidade = this.quantidadeForm.value
-      ? parseInt(this.quantidadeForm.value)
+      ? parseFloat(this.quantidadeForm.value)
       : null;
     const gramatura = this.gramaturaForm.value;
     const marcaId = this.marcaSelectForm.value
@@ -156,14 +154,6 @@ export class EditarProdutoComponent implements OnInit {
 
     if (!nome) {
       alert('Nome está com valor inválido');
-      return;
-    }
-    if (!quantidade) {
-      alert('Quantiaded inválida');
-      return;
-    }
-    if (!gramatura) {
-      alert('Gramatura inválida');
       return;
     }
     if (!marcaId || Number.isNaN(marcaId)) {
@@ -180,9 +170,10 @@ export class EditarProdutoComponent implements OnInit {
         nome: nome,
         descricao: descricao,
         quantidade: quantidade,
-        gramatura: gramatura,
+        gramatura: gramatura || null,
         marcaId: marcaId,
         itemBaseId: itemBaseId,
+        hasEmbalagem: quantidade && gramatura ? true : false,
       })
     )
       .then((resp) => resp)

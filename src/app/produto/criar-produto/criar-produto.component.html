@@ -40,7 +40,7 @@
     [formControl]="gramaturaForm"
     (blur)="checkGramaturaFrom()"
   />
-  <mat-hint>Valores: g, Kg, m ou ml</mat-hint>
+  <mat-hint>Valores: g, Kg, ml, l ou unid</mat-hint>
   @if (gramaturaForm.invalid){
   <mat-error>{{ erroGramaturaMsg }}</mat-error>
   }

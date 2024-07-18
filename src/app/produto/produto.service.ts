@@ -77,7 +77,7 @@ export class ProdutoService {
       return 'A quantidade é obrigatória';
     }
     if (nomeForm.hasError('min')) {
-      return 'O valor da quantidade deve ser maior que 1';
+      return 'O valor da quantidade deve ser maior que 0,001';
     }
     if (nomeForm.hasError('max')) {
       return 'O valor da quantidade deve ser menor que 100000';

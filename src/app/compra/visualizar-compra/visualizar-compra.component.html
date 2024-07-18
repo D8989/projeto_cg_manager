@@ -61,9 +61,7 @@
 
   <ng-container matColumnDef="valor_total">
     <th mat-header-cell *matHeaderCellDef>Valor total</th>
-    <td mat-cell *matCellDef="let item">
-      R$ {{ item.quantidade * item.custo }}
-    </td>
+    <td mat-cell *matCellDef="let item">R$ {{ item.valorTotal }}</td>
   </ng-container>
 
   <ng-container matColumnDef="actions">

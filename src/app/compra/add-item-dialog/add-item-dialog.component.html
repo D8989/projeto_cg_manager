@@ -7,7 +7,7 @@
     required
   >
     <mat-option *ngFor="let prod of produtos" [value]="prod.id">{{
-      prod.nome
+      prod.nome + " (" + prod.marca.nome + ")"
     }}</mat-option>
   </mat-select>
   <mat-error *ngIf="produtoSelectForm.invalid">{{

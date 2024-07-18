@@ -1,4 +1,4 @@
-<h1>Edotar Produto {{ produto.nome }}</h1>
+<h1>Editar Produto {{ produto.nome }}</h1>
 <mat-form-field>
   <mat-label>Nome</mat-label>
   <input
@@ -42,7 +42,7 @@
     (blur)="checkGramaturaFrom()"
     required
   />
-  <mat-hint>Valores: g, Kg, m ou ml</mat-hint>
+  <mat-hint>Valores: g, Kg, ml, l ou unid</mat-hint>
   @if (gramaturaForm.invalid){
   <mat-error>{{ erroGramaturaMsg }}</mat-error>
   }
